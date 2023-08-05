@@ -1,5 +1,5 @@
 <template>
-  <div class="SideBar">
+  <aside class="SideBar">
     <div class="logo">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +47,7 @@
         <img src="../assets/image-avatar.jpg" />
       </div>
     </div>
-  </div>
+  </aside>
 </template>
 <script>
 export default {
