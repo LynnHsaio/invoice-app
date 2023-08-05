@@ -1,0 +1,101 @@
+// colors
+$color-primary: #7c5dfa; //01
+$color-secondary: #9277ff; //02
+
+$color-purple-light: #dfe3fa; //05
+$color-purple-midium: #7e88c3; //07
+$color-purple-dark: #888eb0; //06
+
+$color-black-light: #252945; //04
+$color-black-dark: #1e2139; //03 #373B53
+
+$color-red-dark: #ec5757; //08
+$color-red-light: #ff9797; //09
+
+$color-orange: #ff8f00;
+$color-green: #33d69f;
+$color-black: #373b53;
+
+$backgroundColor-light: #f8f8fb; //10
+$backgroundColor-dark: #141625; //11
+
+// font
+$default-font-color: #0c0e16; //08
+
+// BASE
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  // This defines what 1rem is
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+
+  font-family: League Spartan;
+  font-weight: 700;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+// MIXINS
+@mixin absCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+//LAYOUT
+.page {
+  height: 100%;
+  padding: 50px;
+  background: $backgroundColor-light;
+}
+
+.container {
+  max-width: 750px;
+  height: 100%;
+  margin: 0px auto;
+  padding: 20px;
+  background-color: $backgroundColor-light;
+}
+
+// TYPOGRAPHY
+.heading {
+  font-size: 36px;
+}
+.text-large {
+  font-size: 24px;
+}
+.text-medium {
+  font-size: 15px;
+}
+.text-small {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.color-black {
+  color: $default-font-color;
+}
+.color-white {
+  color: #fff;
+}
+.color-purple {
+  color: $color-purple-dark;
+}
+.color-orange {
+  color: $color-orange;
+}
