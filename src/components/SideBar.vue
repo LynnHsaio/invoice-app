@@ -55,7 +55,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/style/common.scss";
+@import "@/style/variables.scss";
+@import "@/style/mixins.scss";
 .SideBar {
   height: 100%;
   width: 100px;
