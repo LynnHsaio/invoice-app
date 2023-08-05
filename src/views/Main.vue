@@ -28,7 +28,7 @@
               <span class="text-small">{{ item.paymentDue }}</span>
               <span class="text-small">{{ item.clientName }}</span>
             </div>
-            <div class="item-right">
+            <div>
               <span class="text-medium">£ {{ item.total }}</span>
               <span
                 :class="`item-status item-status--${item.status} text-medium`"
@@ -87,11 +87,6 @@ export default {
 
     span:not(:last-child) {
       margin-right: 40px;
-    }
-
-    &-right {
-      display: flex;
-      align-items: center;
     }
   }
 }
