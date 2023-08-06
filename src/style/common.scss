@@ -1,4 +1,6 @@
 @import "@/style/variables";
+@import "@/style/mixins";
+@import "@/style/utilities";
 
 // BASE
 *,
@@ -36,6 +38,33 @@ body,
 
   display: flex;
   flex-direction: column;
+}
+
+.list {
+  list-style: none;
+}
+
+.item-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  padding: 30px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.1);
+
+  cursor: pointer;
+
+  span:not(:last-child) {
+    margin-right: 40px;
+  }
+}
+
+.shadow-container {
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.1);
 }
 
 // TYPOGRAPHY
@@ -80,6 +109,7 @@ body,
   margin-left: 8px;
   font-size: 15px;
   font-weight: 700;
+  text-transform: capitalize;
   transition: 0.3s;
 
   display: inline-flex;
