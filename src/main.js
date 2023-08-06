@@ -1,8 +1,16 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from "vue";
+import App from "./App.vue";
+import VueRouter from "vue-router";
+import router from "./router"
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
+Vue.use(VueRouter)
+
+const vm = new Vue({
+  render: (h) => h(App),
+  router: router
+}).$mount("#app");
+
+console.log('vm', vm)
+

@@ -1,5 +1,5 @@
 <template>
-  <div class="Main page">
+  <div class="Main">
     <div class="container">
       <div class="toolbar">
         <header>
@@ -57,9 +57,6 @@ export default {
     return {
       list: data,
     };
-  },
-  mounted() {
-    console.log(data);
   },
 };
 </script>

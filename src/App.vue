@@ -3,20 +3,18 @@
     <div class="view">
       <SideBar></SideBar>
       <div class="view-main">
-        <Main></Main>
+        <router-view></router-view>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Main from "@/views/Main";
 import SideBar from "./components/SideBar.vue";
 
 export default {
   name: "App",
   components: {
-    Main,
     SideBar,
   },
 };
@@ -35,12 +33,16 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+@import "@/style/variables.scss";
 .view {
   height: 100%;
   display: flex;
 
   &-main {
     flex: 1;
+    height: 100%;
+    padding: 40px;
+    background: $backgroundColor-light;
   }
 }
 </style>
