@@ -28,7 +28,12 @@
       </div>
 
       <ul class="list" v-show="list.length > 0">
-        <li class="item" v-for="item of list" :key="item.id">
+        <li
+          class="item-container"
+          v-for="item of list"
+          :key="item.id"
+          @click="handleItemClick(item)"
+        >
           <div>
             <span class="item-id text-medium">{{ item.id }}</span>
             <span class="text-small">{{ item.paymentDue }}</span>
@@ -63,6 +68,14 @@ export default {
       list: data,
     };
   },
+  methods: {
+    handleItemClick(item) {
+      this.$router.push({
+        path: `/detail/${item.id}`,
+        query: { item },
+      });
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -89,26 +102,6 @@ export default {
 
     h2 {
       margin-bottom: 24px;
-    }
-  }
-
-  .list {
-    list-style: none;
-
-    .item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
-      padding: 30px;
-      border-radius: 8px;
-      background: #fff;
-      box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.1);
-      cursor: pointer;
-
-      span:not(:last-child) {
-        margin-right: 40px;
-      }
     }
   }
 }

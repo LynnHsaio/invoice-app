@@ -9,10 +9,10 @@ const router = new VueRouter({
       component: Main,
     },
     {
-      path: "/detail",
+      path: "/detail/:id",
       component: Detail,
     },
   ],
 });
 
-export default router
+export default router;
