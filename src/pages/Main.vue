@@ -35,12 +35,17 @@
           @click="handleItemClick(item)"
         >
           <div>
-            <span class="item-id text-medium">{{ item.id }}</span>
-            <span class="text-small">{{ item.paymentDue }}</span>
+            <span class="item-id">{{ item.id }}</span>
+            <span class="text-small">
+              <span style="margin-right: 10px">Due</span>
+              <span>{{ formatDate(item.paymentDue) }}</span>
+            </span>
             <span class="text-small">{{ item.clientName }}</span>
           </div>
           <div>
-            <span class="text-medium">£ {{ item.total }}</span>
+            <span class="text-medium currency">{{
+              formatCurrency(item.total)
+            }}</span>
             <span
               :class="`item-status item-status--${item.status} text-medium`"
               >{{ item.status }}</span
@@ -59,6 +64,7 @@
 </template>
 <script>
 import data from "../data/data.json";
+import { formatDate, formatCurrency } from "@/utils";
 
 export default {
   name: "MainPage",
@@ -69,6 +75,8 @@ export default {
     };
   },
   methods: {
+    formatDate,
+    formatCurrency,
     handleItemClick(item) {
       this.$router.push({
         path: `/detail/${item.id}`,
@@ -86,23 +94,19 @@ export default {
   margin-bottom: 60px;
 }
 
-.main {
-  flex: 1;
+.empty {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-  .empty {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  img {
+    margin-bottom: 60px;
+  }
 
-    img {
-      margin-bottom: 60px;
-    }
-
-    h2 {
-      margin-bottom: 24px;
-    }
+  h2 {
+    margin-bottom: 24px;
   }
 }
 </style>

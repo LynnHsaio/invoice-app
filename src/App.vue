@@ -31,18 +31,3 @@ export default {
   margin-top: 60px;
 } */
 </style>
-
-<style lang="scss" scoped>
-@import "@/style/variables.scss";
-.view {
-  height: 100%;
-  display: flex;
-
-  &-main {
-    flex: 1;
-    height: 100%;
-    padding: 40px;
-    background: $backgroundColor-light;
-  }
-}
-</style>

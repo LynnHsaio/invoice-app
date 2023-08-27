@@ -1,6 +1,6 @@
 import VueRouter from "vue-router";
-import Main from "../pages/Main.vue";
-import Detail from "../pages/Detail.vue";
+import Main from "@/pages/Main.vue";
+import Detail from "@/pages/Detail.vue";
 
 const router = new VueRouter({
   routes: [
