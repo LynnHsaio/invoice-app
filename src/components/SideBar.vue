@@ -59,12 +59,12 @@ export default {
 @import "@/style/mixins.scss";
 .SideBar {
   height: 100%;
-  width: 100px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background-color: $color-black-dark;
-  border-radius: 0px 20px 20px 0px;
+  @include borderRadius;
+  z-index: 99;
 
   .logo,
   .avatar,

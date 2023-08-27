@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <!-- Go Back按鈕 -->
     <div class="margin-bottom-small">
       <button class="btn btn--white" @click="goBack">
         <img src="../assets/icon-arrow-left.svg" alt="arrow down icon" />
@@ -7,6 +8,7 @@
       </button>
     </div>
 
+    <!-- 工具列 -->
     <div class="item-container">
       <div>
         <span class="text-small">Status</span>
@@ -27,6 +29,7 @@
       </div>
     </div>
 
+    <!-- 明細 -->
     <main class="main">
       <div class="detail">
         <div class="info">
@@ -107,14 +110,18 @@
         </div>
       </div>
     </main>
+
+    <ToggleForm />
   </div>
 </template>
 <script>
 import data from "../data/data.json";
 import { formatDate, formatCurrency } from "@/utils";
+import ToggleForm from "@/components/ToggleForm.vue";
 
 export default {
   name: "DetailPage",
+  components: { ToggleForm },
   data() {
     return {
       item: {
@@ -158,6 +165,9 @@ export default {
         vm.item = item;
       }
     });
+  },
+  mounted() {
+    console.log("detail this", this);
   },
   // beforeRouteEnter(to, from, next) {
   //   console.log("beforeRouteEnter ", this);
@@ -226,6 +236,7 @@ export default {
   background-color: #fff;
   padding: 48px;
   @include shadow;
+  position: relative;
 
   .info {
     .title {

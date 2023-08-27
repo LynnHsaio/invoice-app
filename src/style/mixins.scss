@@ -11,3 +11,7 @@
   background: #fff;
   box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.1);
 }
+
+@mixin borderRadius {
+  border-radius: 0px 20px 20px 0px;
+}
