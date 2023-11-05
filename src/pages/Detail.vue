@@ -17,7 +17,7 @@
         }}</span>
       </div>
       <div class="btns">
-        <button class="btn btn--white">
+        <button class="btn btn--white" @click="toggleFormVisible = true">
           <span> Edit</span>
         </button>
         <button class="btn btn--red">

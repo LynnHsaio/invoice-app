@@ -3,7 +3,9 @@
     <div class="view">
       <SideBar></SideBar>
       <div class="view-main">
-        <router-view></router-view>
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
       </div>
     </div>
   </div>
