@@ -93,25 +93,36 @@
                 <span>{{ listItem.name }}</span>
                 <span class="color-purple">{{ listItem.quantity }}</span>
                 <span class="color-purple currency">{{
-                  formatCurrency(listItem.price)
+                  formatCurrency(listItem.price, 1, item)
                 }}</span>
                 <span class="currency">{{
-                  formatCurrency(listItem.total)
+                  formatCurrency(listItem.total, 2, item)
                 }}</span>
+                <!-- -----------------以下測試----------------- -->
+                <!-- <span class="color-purple currency">{{
+                  formatCurrency(listItem.price, 1, item)
+                }}</span>
+                <span class="currency">{{
+                  formatCurrency(listItem.total, 2, item)
+                }}</span> -->
               </li>
             </ul>
           </div>
           <div class="total">
             <span class="text-small">Amount Due</span>
             <span class="text-large currency">{{
-              formatCurrency(amountDue)
+              formatCurrency(amountDue, 3, item)
             }}</span>
+            <!-- -----------------以下測試----------------- -->
+            <!-- <span class="text-large currency">{{
+              formatCurrency(amountDue, 3, item)
+            }}</span> -->
           </div>
         </div>
       </div>
     </main>
 
-    <ToggleForm />
+    <ToggleForm :visible.sync="toggleFormVisible" />
   </div>
 </template>
 <script>
@@ -148,6 +159,8 @@ export default {
         items: [],
         total: "",
       },
+
+      toggleFormVisible: false,
     };
   },
   computed: {
@@ -155,6 +168,28 @@ export default {
       return this.item.items.reduce((accu, cur) => accu + cur.total, 0);
     },
   },
+  // -----------------以下測試-----------------
+  // computed: {
+  //   amountDue() {
+  //     console.log("computed", JSON.parse(JSON.stringify(this.item)));
+  //     return this.item.items.reduce((accu, cur) => accu + cur.total, 0);
+  //   },
+  // },
+  // watch: {
+  // item(newValue, oldValue) {
+  //   console.log("watch newValue", newValue);
+  //   console.log("watch oldValue", oldValue);
+  // },
+  // item: {
+  //   immediate: true,
+  //   handler(newValue, oldValue) {
+  //     console.log("watch newValue", newValue);
+  //     console.log("watch oldValue", oldValue);
+  //   },
+  // },
+  // },
+  // -----------------------------------------
+
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       if (
@@ -166,9 +201,7 @@ export default {
       }
     });
   },
-  mounted() {
-    console.log("detail this", this);
-  },
+  // -----------------以下測試-----------------
   // beforeRouteEnter(to, from, next) {
   //   console.log("beforeRouteEnter ", this);
   //   next((vm) => {
@@ -179,9 +212,39 @@ export default {
   //       const item = data.find((item) => item.id === vm.$route.params.id);
   //       vm.item = item;
   //     }
-  //     // console.log("beforeRouteEnter next");
   //     console.log("beforeRouteEnter next", JSON.parse(JSON.stringify(vm.item)));
   //   });
+  // },
+  // beforeCreate() {
+  //   console.log("beforeCreate", this);
+  //   // console.log("beforeCreate", JSON.parse(JSON.stringify(this.item))); 還沒數據代理所以會出錯 item undefined
+  // },
+  // created() {
+  //   // console.log("created");
+  //   console.log("created", JSON.parse(JSON.stringify(this.item)));
+
+  //   this.$nextTick(() => {
+  //     console.log("created nextTick", JSON.parse(JSON.stringify(this.item)));
+  //   });
+  // },
+  // beforeMount() {
+  //   console.log("beforeMount", JSON.parse(JSON.stringify(this.item)));
+  // },
+  // mounted() {
+  //   console.log("mounted", JSON.parse(JSON.stringify(this.item)));
+
+  //   this.$nextTick(() => {
+  //     console.log("mounted nextTick", JSON.parse(JSON.stringify(this.item)));
+  //   });
+  // },
+  // beforeUpdate() {
+  //   console.log("beforeUpdate", JSON.parse(JSON.stringify(this.item)));
+  // },
+  // activated() {
+  //   console.log("activated", JSON.parse(JSON.stringify(this.item)));
+  // },
+  // updated() {
+  //   console.log("updated", JSON.parse(JSON.stringify(this.item)));
   // },
   // beforeRouteLeave(to, from, next) {
   //   console.log("beforeRouteLeave");
@@ -190,31 +253,10 @@ export default {
   //     console.log("beforeRouteLeave next");
   //   });
   // },
-  // activated() {
-  //   console.log("activated", JSON.parse(JSON.stringify(this.item)));
-  // },
   // deactivated() {
   //   console.log("deactivated", JSON.parse(JSON.stringify(this.item)));
   // },
-  // beforeCreate() {
-  //   console.log("beforeCreate", this);
-  //   // console.log("beforeCreate", JSON.parse(JSON.stringify(this.item))); 還沒數據代理所以會出錯 item undefined
-  // },
-  // created() {
-  //   console.log("created", JSON.parse(JSON.stringify(this.item)));
-  // },
-  // beforeMount() {
-  //   console.log("beforeMount", JSON.parse(JSON.stringify(this.item)));
-  // },
-  // mounted() {
-  //   console.log("mounted", JSON.parse(JSON.stringify(this.item)));
-  // },
-  // beforeUpdate() {
-  //   console.log("beforeUpdate", JSON.parse(JSON.stringify(this.item)));
-  // },
-  // updated() {
-  //   console.log("updated", JSON.parse(JSON.stringify(this.item)));
-  // },
+  // -----------------------------------------
   methods: {
     formatDate,
     formatCurrency,
