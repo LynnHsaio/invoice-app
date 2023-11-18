@@ -59,6 +59,7 @@ export default {
 @import "@/style/mixins.scss";
 .SideBar {
   height: 100%;
+  width: $sideBar-width;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -70,6 +71,7 @@ export default {
   .avatar,
   .mode {
     height: 100px;
+    widows: 100%;
     position: relative;
 
     img {

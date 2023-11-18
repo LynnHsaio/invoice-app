@@ -83,8 +83,8 @@ body,
   font-weight: 700;
 }
 .text-large {
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 24px !important;
+  font-weight: 700 !important;
 }
 .text-medium {
   font-size: 15px;
@@ -92,9 +92,9 @@ body,
   color: $default-font-color;
 }
 .text-small {
-  font-size: 13px;
-  font-weight: 500;
-  color: $color-purple-dark;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: $color-purple-dark !important;
 }
 
 .color-black {
@@ -124,6 +124,7 @@ body,
 
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   position: relative;
 

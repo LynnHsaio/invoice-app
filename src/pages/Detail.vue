@@ -122,11 +122,15 @@
       </div>
     </main>
 
-    <ToggleForm :visible.sync="toggleFormVisible" />
+    <ToggleForm
+      :visible.sync="toggleFormVisible"
+      :parentForm.sync="item"
+      @submit="handleUpdate"
+    />
   </div>
 </template>
 <script>
-import data from "../data/data.json";
+// import data from "../data/data.json";
 import { formatDate, formatCurrency } from "@/utils";
 import ToggleForm from "@/components/ToggleForm.vue";
 
@@ -135,6 +139,7 @@ export default {
   components: { ToggleForm },
   data() {
     return {
+      list: [],
       item: {
         id: "",
         createdAt: "",
@@ -196,8 +201,7 @@ export default {
         Object.prototype.hasOwnProperty.call(vm.$route.params, "id") &&
         vm.$route.params.id
       ) {
-        const item = data.find((item) => item.id === vm.$route.params.id);
-        vm.item = item;
+        vm.initData(vm);
       }
     });
   },
@@ -260,6 +264,24 @@ export default {
   methods: {
     formatDate,
     formatCurrency,
+    initData(target) {
+      target.list = JSON.parse(localStorage.getItem("invoice app") || "[]");
+      target.item = target.list.find(
+        (item) => item.id === target.$route.params.id
+      );
+    },
+    handleUpdate(editForm) {
+      const updatedList = this.list.map((item) =>
+        item.id === editForm.id ? editForm : item
+      );
+
+      this.save(updatedList);
+      this.initData(this);
+      this.toggleFormVisible = false;
+    },
+    save(updatedList) {
+      localStorage.setItem("invoice app", JSON.stringify(updatedList));
+    },
     goBack() {
       this.$router.push({
         path: "/",

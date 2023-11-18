@@ -74,6 +74,11 @@ export default {
       list: data,
     };
   },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      vm.list = JSON.parse(localStorage.getItem("invoice app") || "[]");
+    });
+  },
   methods: {
     formatDate,
     formatCurrency,

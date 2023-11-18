@@ -1,16 +1,18 @@
 import Vue from "vue";
 import App from "./App.vue";
 import VueRouter from "vue-router";
-import router from "./router"
+import router from "./router";
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
 
 Vue.config.productionTip = false;
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
+Vue.use(ElementUI);
 
 const vm = new Vue({
   render: (h) => h(App),
-  router: router
+  router: router,
 }).$mount("#app");
 
-console.log('vm', vm)
-
+console.log("vm", vm);
