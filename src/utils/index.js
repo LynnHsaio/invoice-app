@@ -21,7 +21,8 @@ export function formatDate(date) {
   // return new Intl.DateTimeFormat("en-GB", options).format(inputDate);
 }
 
-export function formatCurrency(amount) {
+export function formatCurrency(total) {
+  const amount = total || 0;
   // -----------------以下測試-----------------
   // export function formatCurrency(amount, test, item) {
   // console.log("call method in template formatCurrency", amount, test, item);

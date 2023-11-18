@@ -124,8 +124,9 @@
 
     <!-- 編輯表單抽屜 -->
     <ToggleForm
+      :isNew="false"
       :visible.sync="toggleFormVisible"
-      :parentForm.sync="item"
+      :parentForm="item"
       @submit="handleUpdate"
     />
 
@@ -298,7 +299,6 @@ export default {
       this.initData(this);
       this.toggleFormVisible = false;
     },
-
     handleDelete() {
       const filteredList = this.list.filter(
         (listItem) => listItem.id !== this.item.id

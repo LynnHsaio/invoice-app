@@ -10,7 +10,10 @@
           <span> Filter by status </span>
           <img src="../assets/icon-arrow-down.svg" alt="arrow down icon" />
         </button>
-        <button class="btn btn-new btn--purple">
+        <button
+          class="btn btn-new btn--purple"
+          @click="toggleFormVisible = true"
+        >
           <img src="../assets/icon-plus.svg" alt="puls icon" />
           <span> New Invoice</span>
         </button>
@@ -60,34 +63,65 @@
         </li>
       </ul>
     </main>
+
+    <!-- 編輯表單抽屜 -->
+    <ToggleForm
+      isNew
+      :visible.sync="toggleFormVisible"
+      @submit="handleCreateItem"
+    />
   </div>
 </template>
 <script>
 import data from "../data/data.json";
 import { formatDate, formatCurrency } from "@/utils";
+import ToggleForm from "@/components/ToggleForm.vue";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   name: "MainPage",
-  components: {},
+  components: { ToggleForm },
   data() {
     return {
       list: data,
+
+      toggleFormVisible: false,
     };
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       // localStorage.setItem("invoice app", JSON.stringify(data));
-      vm.list = JSON.parse(localStorage.getItem("invoice app") || "[]");
+
+      vm.initData(vm);
     });
   },
   methods: {
     formatDate,
     formatCurrency,
+    initData(target) {
+      target.list = JSON.parse(localStorage.getItem("invoice app") || "[]");
+    },
     handleItemClick(item) {
       this.$router.push({
         path: `/detail/${item.id}`,
         query: { item },
       });
+    },
+    handleCreateItem(form) {
+      const item = { ...form, id: this.generateShortUuid() };
+      this.list.push(item);
+
+      this.save(this.list);
+      this.toggleFormVisible = false;
+    },
+    generateShortUuid(length = 6) {
+      // 截取指定长度的子字符串
+      const shortUuid = uuidv4().substring(0, length);
+
+      return shortUuid;
+    },
+    save(updatedList) {
+      localStorage.setItem("invoice app", JSON.stringify(updatedList));
     },
   },
 };

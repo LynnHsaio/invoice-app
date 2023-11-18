@@ -1,11 +1,14 @@
 <template>
   <div :class="`toggleForm ${visible ? 'show' : ''}`">
-    <div class="mask" @click="close"></div>
+    <div class="mask" @click="handleClose"></div>
 
     <div class="form-container">
       <h2 class="form-title text-large">
-        <span>Edit </span>
-        <span class="text-large item-id">{{ editForm.id }}</span>
+        <span v-show="isNew">New Invoice</span>
+        <div v-show="!isNew">
+          <span>Edit </span>
+          <span class="text-large item-id">{{ editForm.id }}</span>
+        </div>
       </h2>
 
       <el-form class="form" ref="Form" :model="editForm" :rules="rules">
@@ -193,17 +196,27 @@
             </el-col>
           </el-row>
 
-          <button class="btn btn--white" @click="handleNewItem">
+          <button class="btn btn--white" @click="handleNewListItem">
             + Add New Item
           </button>
         </div>
       </el-form>
 
       <footer>
-        <button class="btn btn--white" @click="handleSubmit">Cancel</button>
-        <button class="btn btn--purple" @click="handleSubmit">
-          Save Changes
+        <button v-show="isNew" class="btn btn--white" @click="handleClose">
+          Discard
         </button>
+        <div>
+          <button v-show="isNew" class="btn btn--black" @click="handleDraft">
+            Save as Draft
+          </button>
+          <button v-show="!isNew" class="btn btn--white" @click="handleClose">
+            Cancel
+          </button>
+          <button class="btn btn--purple" @click="handleSubmit">
+            Save Changes
+          </button>
+        </div>
       </footer>
     </div>
   </div>
@@ -212,13 +225,17 @@
 export default {
   name: "ToggleForm",
   props: {
+    isNew: {
+      type: Boolean,
+      default: true,
+    },
     visible: {
       type: Boolean,
       default: false,
     },
     parentForm: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
   },
   data() {
@@ -231,7 +248,7 @@ export default {
         paymentTerms: "",
         clientName: "",
         clientEmail: "",
-        status: "",
+        status: "pending",
         senderAddress: {
           street: "",
           city: "",
@@ -309,11 +326,15 @@ export default {
   watch: {
     visible(newValue) {
       if (newValue) {
-        this.editForm = JSON.parse(JSON.stringify(this.parentForm));
+        if (this.parentForm.id) {
+          this.editForm = JSON.parse(JSON.stringify(this.parentForm));
+        } else {
+          this.newFormHandle();
+        }
 
         //如果剛開始清單裡沒有項目，預設加新項目
         if (!this.editForm.items.length) {
-          this.pushItem();
+          this.pushListItem();
         }
 
         //開啟表單預設滾動回最上面（這裡不用nextTick也沒關係，因為這個表單抽屜不是懶加載，可是如果是用element ui的話就必須要用）
@@ -336,7 +357,32 @@ export default {
   //   },
   // },
   methods: {
-    close() {
+    newFormHandle() {
+      this.clearObjectValues(this.editForm);
+      this.afterNewFormHandle();
+    },
+    // 清空表單
+    clearObjectValues(obj) {
+      for (const key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+          if (typeof obj[key] === "object" && obj[key] !== null) {
+            // 如果值是对象并且不是 null，则递归清空该对象
+            this.clearObjectValues(obj[key]);
+          } else if (Array.isArray(obj[key])) {
+            // 如果值是数组，则清空数组
+            obj[key] = [];
+          } else {
+            // 否则将值设置为 null（或其他你认为合适的空值）
+            obj[key] = "";
+          }
+        }
+      }
+    },
+    // 指定預設值
+    afterNewFormHandle() {
+      this.editForm.status = "pending";
+    },
+    handleClose() {
       this.$emit("update:visible", false);
     },
     countTotal(index) {
@@ -344,13 +390,13 @@ export default {
 
       this.editForm.items[index].total = price * quantity;
     },
-    handleNewItem() {
+    handleNewListItem() {
       const lastItem = this.editForm.items[this.editForm.items.length - 1];
       const isEmpty = Object.values(lastItem || {}).every((value) => !value);
 
       //如果清單裡沒有東西 或 新加的項目有填值的話 才可以加新項目，以避免無限加新項目
       if (!lastItem || !isEmpty) {
-        this.pushItem();
+        this.pushListItem();
 
         this.$nextTick(() => {
           // 使用 $refs 獲取 scrollContainer 的引用, 要注意的是因為Form使用element ui所以後面要加上$el才可取得元素
@@ -360,7 +406,7 @@ export default {
         });
       }
     },
-    pushItem() {
+    pushListItem() {
       this.editForm.items.push({
         name: "",
         quantity: 0,
@@ -371,9 +417,15 @@ export default {
     handleItemDelete(index) {
       this.editForm.items.splice(index, 1);
     },
+    handleDraft() {
+      this.editForm.status = "draft";
+      this.handleSubmit();
+    },
     handleSubmit() {
+      // 測試
+      // this.$emit("submit", this.editForm);
+
       this.$refs.Form.validate((valid) => {
-        console.log("valid", valid);
         if (valid) {
           this.$emit("submit", this.editForm);
         }
@@ -432,7 +484,7 @@ export default {
 
   .form {
     flex: 1;
-    padding: 0 16px;
+    padding: 10px 16px;
     margin: 10px 40px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -498,8 +550,12 @@ export default {
 footer {
   @include borderRadius;
   padding: 30px 55px;
-
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  box-shadow: rgba(142, 142, 154, 0.2) 0px 0px 50px 0px;
+
+  button:first-child {
+    margin-left: 0px;
+  }
 }
 </style>
