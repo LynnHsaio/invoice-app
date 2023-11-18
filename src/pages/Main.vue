@@ -76,6 +76,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
+      // localStorage.setItem("invoice app", JSON.stringify(data));
       vm.list = JSON.parse(localStorage.getItem("invoice app") || "[]");
     });
   },

@@ -20,7 +20,7 @@
         <button class="btn btn--white" @click="toggleFormVisible = true">
           <span> Edit</span>
         </button>
-        <button class="btn btn--red">
+        <button class="btn btn--red" @click="confirmDialogVisible = true">
           <span> Delete</span>
         </button>
         <button class="btn btn--purple">
@@ -122,11 +122,29 @@
       </div>
     </main>
 
+    <!-- 編輯表單抽屜 -->
     <ToggleForm
       :visible.sync="toggleFormVisible"
       :parentForm.sync="item"
       @submit="handleUpdate"
     />
+
+    <!-- 刪除確認彈窗 -->
+    <el-dialog :visible.sync="confirmDialogVisible" width="480px">
+      <span slot="title"> <h2 class="text-large">Confirm Deletion</h2> </span>
+      <span class="text-small"
+        >Are you sure you want to delete invoice #{{ item.id }}? This action
+        cannot be undone.</span
+      >
+      <span slot="footer">
+        <button class="btn btn--white" @click="confirmDialogVisible = false">
+          <span> Cancel</span>
+        </button>
+        <button class="btn btn--red" @click="handleDelete">
+          <span> Delete</span>
+        </button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -166,6 +184,7 @@ export default {
       },
 
       toggleFormVisible: false,
+      confirmDialogVisible: false,
     };
   },
   computed: {
@@ -279,6 +298,16 @@ export default {
       this.initData(this);
       this.toggleFormVisible = false;
     },
+
+    handleDelete() {
+      const filteredList = this.list.filter(
+        (listItem) => listItem.id !== this.item.id
+      );
+
+      this.save(filteredList);
+      this.confirmDialogVisible = false;
+      this.goBack();
+    },
     save(updatedList) {
       localStorage.setItem("invoice app", JSON.stringify(updatedList));
     },
@@ -370,6 +399,26 @@ export default {
       span {
         color: #fff !important;
       }
+    }
+  }
+}
+.el-dialog__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ::v-deep .el-dialog {
+    margin: 0 !important;
+    border-radius: 8px;
+
+    &__header {
+      padding: 51px 48px 12px;
+    }
+    &__body {
+      padding: 10px 48px 18px;
+    }
+    &__footer {
+      padding: 10px 48px 48px;
     }
   }
 }
