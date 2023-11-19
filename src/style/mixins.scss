@@ -27,7 +27,7 @@
 @mixin textMedium {
   font-size: 15px;
   font-weight: 700;
-  color: $default-font-color;
+  color: $default-font-color !important;
 }
 @mixin textSmall {
   font-size: 13px !important;

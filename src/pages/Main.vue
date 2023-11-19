@@ -8,7 +8,11 @@
         </p>
       </header>
       <div class="btns">
-        <el-select v-model="filterStatus" placeholder="Filter by status">
+        <el-select
+          v-model="filterStatus"
+          placeholder="Filter by status"
+          clearable
+        >
           <el-option
             v-for="item in filterOptions"
             :key="item.CODE_VAL"
@@ -44,7 +48,7 @@
       <ul class="list" v-show="list.length > 0">
         <li
           class="item-container"
-          v-for="item of list"
+          v-for="item of filteredList"
           :key="item.id"
           @click="handleItemClick(item)"
         >
@@ -115,6 +119,15 @@ export default {
       toggleFormVisible: false,
     };
   },
+  computed: {
+    filteredList() {
+      if (this.filterStatus) {
+        return this.list.filter((item) => item.status === this.filterStatus);
+      } else {
+        return this.list;
+      }
+    },
+  },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       // localStorage.setItem("invoice app", JSON.stringify(data));
@@ -154,11 +167,39 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "@/style/mixins.scss";
+@import "@/style/variables.scss";
+
 .toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 60px;
+}
+
+.el-select {
+  width: 160px;
+  margin-right: 20px;
+  ::v-deep .el-input {
+    &__inner {
+      border: none;
+      background-color: #f8f8fb;
+      @include textMedium;
+    }
+
+    &__icon {
+      color: $color-primary !important;
+    }
+  }
+}
+.el-select-dropdown__item {
+  @include textSmall;
+  &.hover {
+    background-color: rgba($color-purple-dark, 0.1);
+  }
+  &.selected {
+    color: $color-primary !important;
+  }
 }
 
 .empty {
