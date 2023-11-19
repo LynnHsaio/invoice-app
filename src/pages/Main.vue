@@ -3,13 +3,24 @@
     <div class="toolbar">
       <header>
         <h1 class="heading">Invoices</h1>
-        <p class="text-small color-purple">There are {{ 7 }} total invoices</p>
+        <p class="text-small color-purple">
+          There are {{ list.length }} total invoices
+        </p>
       </header>
       <div class="btns">
-        <button class="btn btn--white">
+        <el-select v-model="filterStatus" placeholder="Filter by status">
+          <el-option
+            v-for="item in filterOptions"
+            :key="item.CODE_VAL"
+            :label="item.CODE_DESC"
+            :value="item.CODE_VAL"
+          >
+          </el-option>
+        </el-select>
+        <!-- <button class="btn btn--white">
           <span> Filter by status </span>
           <img src="../assets/icon-arrow-down.svg" alt="arrow down icon" />
-        </button>
+        </button> -->
         <button
           class="btn btn-new btn--purple"
           @click="toggleFormVisible = true"
@@ -84,6 +95,22 @@ export default {
   data() {
     return {
       list: data,
+
+      filterStatus: "",
+      filterOptions: [
+        {
+          CODE_DESC: "Pending",
+          CODE_VAL: "pending",
+        },
+        {
+          CODE_DESC: "Paid",
+          CODE_VAL: "paid",
+        },
+        {
+          CODE_DESC: "Draft",
+          CODE_VAL: "draft",
+        },
+      ],
 
       toggleFormVisible: false,
     };
