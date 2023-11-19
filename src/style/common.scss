@@ -47,12 +47,21 @@ body,
   margin: 0px auto;
   padding: 20px;
   background-color: $backgroundColor-light;
+  overflow: auto;
 
   display: flex;
   flex-direction: column;
 
   .main {
     flex: 1;
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $color-purple-light;
+    border-radius: 4px;
   }
 }
 
