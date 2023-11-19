@@ -23,7 +23,7 @@
         <button class="btn btn--red" @click="confirmDialogVisible = true">
           <span> Delete</span>
         </button>
-        <button class="btn btn--purple">
+        <button class="btn btn--purple" @click="handlePaid">
           <span> Mark as Paid </span>
         </button>
       </div>
@@ -307,6 +307,10 @@ export default {
       this.save(filteredList);
       this.confirmDialogVisible = false;
       this.goBack();
+    },
+    handlePaid() {
+      this.item.status = "paid";
+      this.handleUpdate(this.item);
     },
     save(updatedList) {
       localStorage.setItem("invoice app", JSON.stringify(updatedList));

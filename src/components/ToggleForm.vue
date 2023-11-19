@@ -357,6 +357,7 @@ export default {
   //   },
   // },
   methods: {
+    //開啟新表單
     newFormHandle() {
       this.clearObjectValues(this.editForm);
       this.afterNewFormHandle();
@@ -382,14 +383,8 @@ export default {
     afterNewFormHandle() {
       this.editForm.status = "pending";
     },
-    handleClose() {
-      this.$emit("update:visible", false);
-    },
-    countTotal(index) {
-      const { price, quantity } = this.editForm.items[index];
 
-      this.editForm.items[index].total = price * quantity;
-    },
+    //加入新的清單項目
     handleNewListItem() {
       const lastItem = this.editForm.items[this.editForm.items.length - 1];
       const isEmpty = Object.values(lastItem || {}).every((value) => !value);
@@ -423,13 +418,21 @@ export default {
     },
     handleSubmit() {
       // 測試
-      // this.$emit("submit", this.editForm);
+      this.$emit("submit", this.editForm);
 
-      this.$refs.Form.validate((valid) => {
-        if (valid) {
-          this.$emit("submit", this.editForm);
-        }
-      });
+      // this.$refs.Form.validate((valid) => {
+      //   if (valid) {
+      //     this.$emit("submit", this.editForm);
+      //   }
+      // });
+    },
+    handleClose() {
+      this.$emit("update:visible", false);
+    },
+    countTotal(index) {
+      const { price, quantity } = this.editForm.items[index];
+
+      this.editForm.items[index].total = price * quantity;
     },
   },
 };
